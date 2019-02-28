@@ -36,13 +36,12 @@ def parse_seller_profile_table(seller_profile_table):
 
 
 def write_to_csv(item_info):
-    print("HERE")
     if os.path.exists('bstock_data.csv') == False:
-        with open('bstock_data.csv', 'a') as csv_file:
+        with open('bstock_data.csv', 'a',newline='') as csv_file:
             writer = csv.writer(csv_file)
             writer.writerow(item_info.keys())
 
-    with open('bstock_data.csv', 'a') as csv_file:
+    with open('bstock_data.csv', 'a',newline='') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(item_info.values())
 
@@ -53,6 +52,15 @@ def processHTML(user_input):
     item_info = {}
 
     #this is where i get all of the data from the html code
+
+    #auction id
+
+    try:
+        auction_id = soup.find('input', {'id': 'auction_id'}).get('value')
+
+    except:
+        auction_id = ''
+
 
     #auction end time
     try:
@@ -189,6 +197,7 @@ def processHTML(user_input):
 
 
     #creating the dictionary that has all of the data within it	#######################################
+    item_info['auction_id'] = auction_id
     item_info['product_name'] = product_name
     item_info['category'] = category
     item_info['cepa'] = cepa
@@ -234,7 +243,9 @@ def processHTML(user_input):
     for key,val in item_info.items():
         print('\n{}: {}'.format(key,val))
 
-    #write_to_csv(item_info)
+
+    if auction_id:
+        write_to_csv(item_info)
 
 def makeBox():
     """Created an entry box that the user can submit html code into"""

@@ -65,8 +65,8 @@ def processHTML(user_input):
     #auction end time
     try:
         auction_end = soup.find("span", id="auction_end_time").text.strip().split()
-        auction_end_date = ' '.join(auction_end_time[0:4])
-        auction_end_time = ' '.join(auction_end_time[4:])
+        auction_end_date = ' '.join(auction_end[0:4])
+        auction_end_time = ' '.join(auction_end[4:])
     except:
         auction_end_date = ''
         auction_end_time = ''
@@ -152,7 +152,7 @@ def processHTML(user_input):
 
     #bid retail
     try:
-        bid_retail = int(bid_number)/int(retail_price)
+        bid_retail = int(bid_number)/int(retailPrice)
     except:
         bid_retail = 0
 

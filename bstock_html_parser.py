@@ -94,11 +94,30 @@ def processHTML(user_input):
 
         condition = auction_details_dict['condition']
 
-        shipping_info = auction_details_dict['shipping'].strip()
     except:
         condition = ''
 
+
+    #shipping info
+    try:
+        auction_details_categories =soup.find('div', {'class' :'auction-details'}).find_all('dt') #these are the categories for the auction details
+        auction_details_data =soup.find('div', {'class' :'auction-details'}).find_all('dd') #this is the data from the auction details
+
+        auction_details_dict = create_auction_details_dict(auction_details_categories,auction_details_data)
+        shipping_info = auction_details_dict['shipping'].strip()
+    except:
         shipping_info = ''
+
+    try:
+        auction_details_categories =soup.find('div', {'class' :'auction-details'}).find_all('dt') #these are the categories for the auction details
+        auction_details_data =soup.find('div', {'class' :'auction-details'}).find_all('dd') #this is the data from the auction details
+
+        auction_details_dict = create_auction_details_dict(auction_details_categories,auction_details_data)
+        description = auction_details_dict['description'].strip()
+    except:
+        description = ''
+
+
 
 
     #retail price
@@ -236,6 +255,7 @@ def processHTML(user_input):
     item_info['views'] = ''
     item_info['bidders'] = ''
     item_info['watching'] = ''
+    item_info['description'] = description
     ####################################################################################################
 
 
